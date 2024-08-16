@@ -1,6 +1,7 @@
 import {faker} from '@faker-js/faker';
 import RestartButton from './components/RestartButton';
 import Results from './components/Results';
+import UserInput from './components/UserInput';
 
 const words = faker.random.words(10) //create random words
 
@@ -8,7 +9,13 @@ const App = () => {
   return (
   <>
     <CountdownTime timeLeft={30}/>
-    <GenerateWords words={words}/>;
+    <WordsContainer> 
+      {/* generate words to be typed */}
+      <GenerateWords words={words}/>
+      {/* take input from user */}
+      <UserInput className='absolute inset-0' Input={words}/>
+    </WordsContainer>
+
     <RestartButton 
       onRestart={() => {}} 
       classname="mx-auto mt-10 text-slate-500"/>
@@ -22,8 +29,15 @@ const App = () => {
   );
 }
 
+const WordsContainer = ({children}:{children: React.ReactNode}) => {
+  return (
+  <div className='relative max-w-xl mt-3 text-3xl leading-relaxed break-all'>
+    {children}
+  </div>)
+}
+
 const GenerateWords = ({words}: {words: string}) => {
-  return <div className="text-4xl text-center text-slate-500">{words}</div>;
+  return <div className="text-slate-500">{words}</div>;
 }
 
 const CountdownTime = ({timeLeft}: {timeLeft: number}) => {
